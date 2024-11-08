@@ -1,0 +1,8 @@
+FROM rocketbuddha/ww-sp-java17-builder:0.10 AS builder
+WORKDIR /tmp/ww/mlqs-etl
+COPY . .
+RUN mvn clean package -DskipTests
+FROM openjdk:17-jdk-slim
+WORKDIR /opt/ww/mlqs-etl
+COPY --from=builder /tmp/ww/mlqs-etl/target/mlqs-etl.jar /opt/ww/mlqs-etl
+CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "mlqs-etl.jar", "--spring.profiles.active=compose"]

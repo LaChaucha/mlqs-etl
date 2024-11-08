@@ -1,0 +1,51 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:example@localhost:5017
+      database: datalake
+  security:
+    user:
+      name: api
+      password: api
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  batch:
+    jdbc:
+      initialize-schema: always
+      platform: h2
+    job:
+      enabled: false
+  sql:
+    init:
+      platform: h2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        generate_statistics: false
+    show-sql: true
+
+h2:
+  datasource:
+    driver: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    user: sa
+    password: 'pass'
+
+postgres:
+  datasource:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mlqs-data-warehouse
+    user: postgres-user
+    password: postgres-pass
+
+server:
+  port: 8080
